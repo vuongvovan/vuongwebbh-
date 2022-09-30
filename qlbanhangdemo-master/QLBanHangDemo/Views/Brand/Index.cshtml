@@ -1,0 +1,74 @@
+﻿@model IEnumerable<QLBanHangDemo.Models.Brand>
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-7 col-auto">
+                    <h3 class="page-title">Brands</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Brands</li>
+                    </ul>
+                </div>
+                <div class="col-sm-5 col">
+                    <a class="btn btn-primary float-right mt-2" asp-action="Create">Add</a>
+
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="datatable table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.BrandName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.BrandDesc)
+                                        </th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BrandName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BrandDesc)
+                                        </td>
+                                      
+                                        <td class="text-right">
+                                            <div class="actions">                                      
+                                                <a class="btn btn-sm bg-success-light" asp-action="Edit" asp-route-id="@item.BrandId">
+                                                    <i class="fe fe-pencil"></i> Edit
+                                                </a>
+                                                <a class="btn btn-sm bg-danger-light" asp-action="Delete" asp-route-id="@item.BrandId">
+                                                    <i class="fe fe-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	

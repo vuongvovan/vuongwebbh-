@@ -1,0 +1,66 @@
+﻿@model QLBanHangDemo.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_AccountLayout";
+}
+<!-- Main Wrapper -->
+
+                <div class="login-right">
+                    <div class="login-right-wrap">
+                        <h1>Register</h1>
+                        <p class="account-subtitle">Access to our dashboard</p>
+
+                        <!-- Form -->
+                        <form asp-action="Register">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label"></label>
+                                <input asp-for="Email" class="form-control" required />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password" class="control-label"></label>
+                                <input asp-for="Password" class="form-control" required/>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ConfirmPassword" class="control-label"></label>
+                                <input asp-for="ConfirmPassword" class="form-control" required/>
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                        <!-- /Form -->
+
+                        <div class="login-or">
+                            <span class="or-line"></span>
+                            <span class="span-or">or</span>
+                        </div>
+
+                        <!-- Social Login -->
+                        <div class="social-login">
+                            <span>Register with</span>
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a><a href="#" class="google"><i class="fa fa-google"></i></a>
+                        </div>
+                        <!-- /Social Login -->
+
+                        <div class="text-center dont-have">
+                            Already have an account?                         
+                            <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Login">Login<span class="sr-only">(current)</span></a>
+                        </div>
+                    </div>
+                </div>
+
+<!-- /Main Wrapper -->
+<!-- jQuery -->
+<script src="~/AssetsAdmin/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap Core JS -->
+<script src="~/AssetsAdmin/js/popper.min.js"></script>
+<script src="~/AssetsAdmin/js/bootstrap.min.js"></script>
+
+<!-- Custom JS -->
+<script src="~/AssetsAdmin/js/script.js"></script>

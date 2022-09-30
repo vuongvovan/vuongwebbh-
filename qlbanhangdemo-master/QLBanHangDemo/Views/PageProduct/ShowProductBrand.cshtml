@@ -1,0 +1,104 @@
+﻿@model IEnumerable<QLBanHangDemo.Models.Product>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "Page_layout";
+}
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="row align-items-center mb-4">
+                <div class="col-md-6 col">
+                    <h4>Sản Phẩm </h4>
+                </div>
+
+                <div class="col-md-6 col-auto">
+                    <div class="view-icons ">
+                        <a href="map-grid.html" class="grid-view active"><i class="fas fa-th-large"></i></a>
+                        <a href="map-list.html" class="list-view"><i class="fas fa-bars"></i></a>
+                    </div>
+                    <div class="sort-by d-sm-block d-none">
+                        <span class="sortby-fliter">
+                            <select class="select">
+                                <option>Sắp Xếp</option>
+                                <option class="sorting">Số Sao</option>
+                                <option class="sorting">Lượt Xem</option>
+                                <option class="sorting">Mới Nhất</option>
+                                <option class="sorting">Tên</option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-3 col-md-4 col-xl-3">
+                        <div class="profile-widget">
+                            <div class="doc-img">
+                                <a asp-action="ShowProductDetail" asp-route-id="@item.ProductId">
+                                    <img class="img-fluid" alt="User Image" src="~/@item.ProductImage">
+                                </a>
+                                <a href="javascript:void(0)" class="fav-btn">
+                                    <i class="far fa-bookmark"></i>
+                                </a>
+                            </div>
+                            <div class="pro-content">
+                                <h3 class="title">
+                                    <a href="doctor-profile.html">@item.ProductName</a>
+                                    <i class="fas fa-check-circle verified"></i>
+                                </h3>
+                                <p class="speciality">MBBS, MD - Ophthalmology, DNB - Ophthalmology</p>
+                                <div class="rating">
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="d-inline-block average-rating">(66)</span>
+                                </div>
+                                <ul class="available-info">
+                                    <li>
+                                        <i class="fas fa-map-marker-alt"></i> Danh Mục : @item.Category.CategoryName
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-map-marker-alt"></i>Nhà Thuốc: @item.Brand.BrandName
+                                    </li>
+                                    <li>
+                                        <i class="far fa-clock"></i>
+                                        Tình Trạng : @item.ProductStatus
+                                    </li>
+                                    <li>
+                                        <i class="far fa-money-bill-alt"></i>Giá @item.ProductPrice.ToString("n0") VNĐ
+                                        <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i>
+                                    </li>
+                                </ul>
+                                <div class="row row-sm">
+                                    <div class="col-6">
+                                        <a href="doctor-profile.html" class="btn view-btn">Yêu Thích</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a asp-action="AddToCart" asp-route-id="@item.ProductId" class="btn book-btn">Mua Ngay</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <!--
+                    <div class="load-more text-center">
+                        <a class="btn btn-primary btn-sm" href="javascript:void(0);">Load More</a>
+                    </div>
+                </div>
+                <!-- /content-left-->
+
+            </div>
+            <div class="load-more text-center">
+                <a class="btn btn-primary btn-sm" href="javascript:void(0);">Hiện Thị Thêm Sản Phẩm</a>
+            </div>
+        </div>

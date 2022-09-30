@@ -1,0 +1,185 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<QLBanHangDemo.Models.Product>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *,ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-7 col-auto">
+                <h3 class="page-title">Brands</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Brands</li>
+                </ul>
+            </div>
+            <div class="col-sm-5 col">
+                <a class="btn btn-primary float-right mt-2" asp-action="Create">Add</a>
+
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="datatable table table-hover table-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ProductImage)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ProductName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Category)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Brand)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ProductPrice)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ProductDesc)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ProductStatus)
+                                    </th>
+                                    <th class="text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+
+
+                                    <tr>
+                                        <td>
+                                            @if (item.ProductImage != null)
+                                            {
+                                                <img style="width:50px;height:50px; object-fit:cover" src="~/@(item.ProductImage)">
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductPrice)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductDesc)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductStatus)
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a class="btn btn-sm bg-success-light" asp-action="Edit" asp-route-id="@item.ProductId">
+                                                    <i class="fe fe-pencil"></i> Edit
+                                                </a>
+                                                <a class="btn btn-sm bg-danger-light" asp-action="Delete" asp-route-id="@item.ProductId">
+                                                    <i class="fe fe-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<nav aria-label="Product navigation example">
+    <vc:pager paging-list="@Model" />
+</nav>
+
+
+<!--
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductStatus)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>
+                    @if (item.ProductImage != null)
+                    {
+                        <img style="width:50px;height:50px; object-fit:cover" src="~/@(item.ProductImage)">
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductStatus)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+<nav aria-label="Product navigation example">
+    <vc:pager paging-list="@Model" />
+</nav>
+-->

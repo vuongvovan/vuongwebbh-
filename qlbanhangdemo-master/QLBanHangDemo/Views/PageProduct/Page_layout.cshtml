@@ -1,0 +1,359 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager;
+@inject UserManager<IdentityUser> UserManager;
+
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+@{
+    var session = HttpContextAccessor.HttpContext.Session;
+    string jsoncart = session.GetString(QLBanHangDemo.Controllers.PageProductController.CARTKEY);
+    var countcart = 0;
+    if (jsoncart != null)
+    {
+        var cart = JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
+        countcart = (@cart.Count);
+    }
+}
+
+
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>@ViewData["Title"] - QLBanHang</title>
+    <!-- Favicon -->
+    <!-- Favicons -->
+    <link href="~/AssetsPage/img/favicon.png" rel="icon">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/AssetsPage/css/bootstrap.min.css">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="~/AssetsPage/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="~/AssetsPage/plugins/fontawesome/css/all.min.css">
+
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="~/AssetsPage/plugins/select2/css/select2.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="~/AssetsPage/css/style.css">
+</head>
+<body>
+    @{
+        var listCate = (List<QLBanHangDemo.Models.Category>)ViewBag.Cate;
+        var listBrand = (List<QLBanHangDemo.Models.Brand>)ViewBag.BrandName;
+    }
+    <div class="main-wrapper">
+        <header class="header">
+            <nav class="navbar navbar-expand-lg header-nav">
+                <div class="navbar-header">
+                    <a id="mobile_btn" href="javascript:void(0);">
+                        <span class="bar-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </a>
+                    <a href="index.html" class="navbar-brand logo">
+                        <img src="~/AssetsPage/img/logo.png" class="img-fluid" alt="Logo">
+                    </a>
+                </div>
+                <div class="main-menu-wrapper">
+                    <div class="menu-header">
+                        <a href="index.html" class="menu-logo">
+                            <img src="~/AssetsPage/img/logo.png" class="img-fluid" alt="Logo">
+                        </a>
+                        <a id="menu_close" class="menu-close" href="javascript:void(0);">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </div>
+                    <ul class="main-nav">
+                        <li>
+                            <a asp-action="Index">Home</a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">Dannh Mục <i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                @foreach (var item in listCate)
+                                {
+                                    <li><a asp-action="ShowProductCate" asp-route-id="@item.CategoryId">@item.CategoryName</a></li>
+                                }
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">Nhà Thuốc <i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                @foreach (var item in listBrand)
+                                {
+                                    <li><a asp-action="ShowProductBrand" asp-route-id="@item.BrandId">@item.BrandName</a></li>
+
+                                }
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">Tìm Hiếu Bệnh<i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li><a href="#">Tim Mạch</a></li>
+                                <li>
+                                    <a href="#">Da Liễu</a>
+                                </li>
+                                <li><a href="#">Thần kinh</a></li>
+                                <li><a href="#">Tiêu Hóa</a></li>
+                                <li><a href="#">Xương Khớp</a></li>
+                                <li><a href="#">Đau Đầu</a></li>
+                                <li><a href="#">Tai Mũi Họng</a></li>
+                                <li><a href="#">Truyền Nhiễm</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">Tin Tức<i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li><a href="#">Sức Khỏe Tổng Hợp</a></li>
+                                <li><a href="#">Thị Trường Thuốc</a></li>
+                                <li><a href="#">Các Bệnh Tuổi Già</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a asp-controller="Cart" asp-action="">Giỏ Hàng (@countcart)</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Home" asp-action="Index">Admin</a>
+                        </li>
+
+                     
+                    </ul>
+                </div>
+                <ul class="nav header-navbar-rht">
+                    <li class="nav-item contact-item">
+                        <div class="header-contact-img">
+                            <i class="far fa-hospital"></i>
+                        </div>
+                        <div class="header-contact-detail">
+                            <p class="contact-header">Liên Hê</p>
+                            <p class="contact-info-header"> +1 315 369 5943</p>
+                        </div>
+                    </li>
+                   
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link header-login" asp-area="" asp-controller="PageProduct" asp-action="Login">Đăng Nhập</a>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li class="nav-item" style="color:blueviolet">
+                            <i >
+                                @User.Identity.Name
+                            </i>
+                        </li>
+                        <li class="nav-item">
+                            <form asp-controller="PageProduct" asp-action="Logout">
+                                <input type="submit" class="nav-link header-login" style="background-color:aquamarine" value="Đăng Xuất" />
+                            </form>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </header>
+        <section class="section section-search">
+            <div class="container-fluid">
+                <div class="banner-wrapper">
+                    <div class="banner-header text-center">
+                        <h1>
+                            CHÚNG TÔI ĐẶT SỨC KHỎE
+                            CỦA KHÁCH HÀNG LÊN HÀNG ĐẦU
+                        </h1>
+                        <p>
+                            Nhà thuốc Minh Hương là một trong những nhà thuốc đạt chuẩn GPP của Bộ Y tế. Vị trí Nhà thuốc tại trung tâm Thành phố Hồ Chí Minh với đội ngũ Dược sĩ yêu nghề có kinh nghiệm lâu năm
+                        </p>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="search-box">
+                        <form action="#" style="float:right">
+                            <div class="form-group search-info">
+                                <input type="text" class="form-control" placeholder="Tìm Kiếm Thuốc Hoặc Bệnh">
+                                <span class="form-text">Ví dụ : Nhà tôi 3 đòi bị xương khớp </span>
+                            </div>
+                            <button type="submit" class="btn btn-primary search-btn"><i class="fas fa-search"></i> <span>Search</span></button>
+                        </form>
+                    </div>
+                    <!-- /Search -->
+
+                </div>
+            </div>
+        </section>
+        <div class="content">
+            @RenderBody()
+        </div>
+
+        <footer class="footer">
+
+            <!-- Footer Top -->
+            <div class="footer-top">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+
+                            <!-- Footer Widget -->
+                            <div class="footer-widget footer-about">
+                                <div class="footer-logo">
+                                    <img src="~/AssetsPage/img/footer-logo.png" alt="logo">
+                                </div>
+                                <div class="footer-about-content">
+                                    <p>Nhà thuốc Minh Hương là một trong những nhà thuốc đạt chuẩn GPP của Bộ Y tế. Vị trí Nhà thuốc tại trung tâm Thành phố Hồ Chí Minh với đội ngũ Dược sĩ yêu nghề có kinh nghiệm lâu năm</p>
+                                    <div class="social-icon">
+                                        <ul>
+                                            <li>
+                                                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Footer Widget -->
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <!-- Footer Widget -->
+                            <div class="footer-widget footer-menu">
+                                <h2 class="footer-title"> GIỚI THIỆU - HỢP TÁC KINH DOANH </h2>
+                                <ul>
+                                    <li><a href="#">MINH HƯƠNG PHARMACY</a></li>
+                                    <li><a href="#">Cung cấp hàng cho MINH HƯƠNG PHARMACY <br>Làm đại lý, khách sỉ, cộng tác viên</a></li>
+                                </ul>
+                            </div>
+                            <!-- /Footer Widget -->
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <!-- Footer Widget -->
+                            <div class="footer-widget footer-menu">
+                                <h2 class="footer-title">
+                                    TRUY CẬP NHANH
+                                    
+                                </h2>
+                                <ul>
+                                    <li><a href="#"> Liên hệ</a></li>
+                                    <li><a href="#">Điều khoản sử dụng</a></li>
+                                    <li><a href="#">Chính sách bảo mật</a></li>
+                                    <li><a href="#">Phương thức vận chuyển</a></li>
+                                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                                    <li><a href="#">Hình thức thanh toán</a></li>
+                                    <li><a href="#">Quy định đổi trả</a></li>
+                                </ul>
+                            </div>
+                            <!-- /Footer Widget -->
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <!-- Footer Widget -->
+                            <div class="footer-widget footer-contact">
+                                <h2 class="footer-title">Liên hệ</h2>
+                                <div class="footer-contact-info">
+                                    <div class="footer-address">
+                                        <span><i class="fas fa-map-marker-alt"></i></span>
+                                        <p> 28/7, Vườn Lài,<br> P.An Phú Đông, Quận 12 </p>
+                                    </div>
+                                    <p>
+                                        <i class="fas fa-phone-alt"></i>
+                                        +1 315 369 5943
+                                    </p>
+                                    <p class="mb-0">
+                                        <i class="fas fa-envelope"></i>
+                                        tronghieu08022000@gmail.com
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- /Footer Widget -->
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /Footer Top -->
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="container-fluid">
+
+                    <!-- Copyright -->
+                    <div class="copyright">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="copyright-text">
+                                    <p class="mb-0">&copy; 2020 Doccure. All rights reserved.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+
+                                <!-- Copyright Menu -->
+                                <div class="copyright-menu">
+                                    <ul class="policy-menu">
+                                        <li><a href="term-condition.html">Terms and Conditions</a></li>
+                                        <li><a href="privacy-policy.html">Policy</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /Copyright Menu -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Copyright -->
+
+                </div>
+            </div>
+            <!-- /Footer Bottom -->
+
+        </footer>
+    </div>
+
+    <script src="~/AssetsPage/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="~/AssetsPage/js/popper.min.js"></script>
+    <script src="~/AssetsPage/js/bootstrap.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="~/AssetsPage/plugins/select2/js/select2.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="~/AssetsPage/js/script.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6adZVdzTvBpE2yBRK8cDfsss8QXChK0I"></script>
+    <script src="~/AssetsPage/js/map.js"></script>
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,70 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+<!DOCTYPE html>
+
+@inject SignInManager<IdentityUser> SignInManager;
+@inject UserManager<IdentityUser> UserManager;
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QLBanHang</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/AssetsAdmin/img/favicon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/AssetsAdmin/css/bootstrap.min.css">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="~/AssetsAdmin/css/font-awesome.min.css">
+
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="~/AssetsAdmin/css/feathericon.min.css">
+
+    <link rel="stylesheet" href="~/AssetsAdmin/plugins/morris/morris.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="~/AssetsAdmin/css/style.css">
+</head>
+<body>
+    <div class="main-wrapper login-body">
+        <div class="login-wrapper">
+            <div class="container">
+                <div class="loginbox">
+                    <div class="login-left">
+                        <img class="img-fluid" src="~/AssetsAdmin/img/logo-white.png" alt="Logo">
+                    </div>
+                    <div class="login-right">
+                        
+                            @RenderBody()
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/AssetsAdmin/js/jquery-3.2.1.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="~/AssetsAdmin/js/popper.min.js"></script>
+    <script src="~/AssetsAdmin/js/bootstrap.min.js"></script>
+
+    <!-- Slimscroll JS -->
+    <script src="~/AssetsAdmin/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <script src="~/AssetsAdmin/plugins/raphael/raphael.min.js"></script>
+    <script src="~/AssetsAdmin/plugins/morris/morris.min.js"></script>
+    <script src="~/AssetsAdmin/js/chart.morris.js"></script>
+
+    <!-- Custom JS -->
+    <script src="~/AssetsAdmin/js/script.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+
